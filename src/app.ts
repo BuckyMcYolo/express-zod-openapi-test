@@ -4,6 +4,7 @@ import helmet from 'helmet'
 import dotenv from 'dotenv'
 import { createConfig, attachRouting } from 'express-zod-api'
 import { v1Routes } from './routes/v1/index'
+import { v2Routes } from './routes/v2/index'
 dotenv.config()
 
 const app: Application = express()
@@ -35,6 +36,7 @@ const config = createConfig({
 attachRouting(config, {
   api: {
     v1: v1Routes,
+    v2: v2Routes,
   },
 })
 
