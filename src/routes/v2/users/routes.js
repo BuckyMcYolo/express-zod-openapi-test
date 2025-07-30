@@ -22,7 +22,7 @@ export const getUsersEndpoint = router.build({
 
     console.log(options.user.id)
 
-    const users = await db.query.usersTable.findMany({
+    let users = await db.query.usersTable.findMany({
       limit,
       offset,
     })

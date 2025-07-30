@@ -22,8 +22,6 @@ export const getUsersEndpoint = router.build({
     count: z.number(),
   }),
   handler: async ({ input: { limit, offset }, options }) => {
-    // Using db.query for better intellisense
-
     console.log(options.user.id)
 
     const users = await db.query.usersTable.findMany({
@@ -55,13 +53,15 @@ export const getUserByIdEndpoint = router.build({
 // Create user endpoint
 export const createUserEndpoint = router.build({
   method: 'post',
-  input: insertUserSchema,
+  input: z.object({
+    user: insertUserSchema,
+  }),
   output: z.object({
     user: selectUserSchema,
     message: z.string(),
   }),
   handler: async ({ input }) => {
-    return createUsersHandler(input)
+    return createUsersHandler(input.user)
   },
 })
 

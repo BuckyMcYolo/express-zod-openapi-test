@@ -3,7 +3,7 @@ import { db } from '../../../db'
 import { usersTable } from '../../../db/schema'
 
 export const getUsersHandler = async (id) => {
-  const [user] = await db.select().from(usersTable).where(eq(usersTable.id, id))
+  let [user] = await db.select().from(usersTable).where(eq(usersTable.id, id))
 
   if (!user) {
     throw new Error('User not found')
@@ -18,7 +18,7 @@ export const getUsersHandler = async (id) => {
 }
 
 export const createUsersHandler = async (input) => {
-  const [user] = await db.insert(usersTable).values(input).returning()
+  let [user] = await db.insert(usersTable).values(input).returning()
 
   if (!user) {
     throw new Error('Failed to create user')

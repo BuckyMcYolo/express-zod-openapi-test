@@ -10,7 +10,7 @@ dotenv.config()
 const app: Application = express()
 const PORT = process.env.PORT || 3000
 
-// Middleware
+// // Middleware
 app.use(helmet())
 app.use(cors())
 app.use(express.json())
@@ -47,9 +47,9 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 })
 
 // 404 handler
-app.use('*', (req: Request, res: Response) => {
-  res.status(404).json({ message: 'Route not found' })
-})
+// app.use('*', (req: Request, res: Response) => {
+//   res.status(404).json({ message: 'Route not found' })
+// })
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
