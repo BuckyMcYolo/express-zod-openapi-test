@@ -8,7 +8,6 @@ import {
   updateTodosHandler,
   deleteTodosHandler,
 } from './handlers'
-import { authMiddleware } from '../../../middleware/auth-middleware'
 import { publicMiddleware } from '../../../middleware/public-middleware'
 
 const router = defaultEndpointsFactory.addMiddleware(publicMiddleware)
@@ -24,8 +23,6 @@ export const getTodosEndpoint = router.build({
     count: z.number(),
   }),
   handler: async ({ input: { limit, offset }, options }) => {
-    console.log(options.ip)
-
     const todos = await db.query.todosTable.findMany({
       limit,
       offset,

@@ -6,7 +6,7 @@ import {
   text,
   boolean,
 } from 'drizzle-orm/pg-core'
-// import { createSelectSchema, createInsertSchema } from 'drizzle-zod' // Not needed for manual schemas
+import { createSelectSchema, createInsertSchema } from 'drizzle-zod' // Not needed for manual schemas
 import { z } from 'zod/v4'
 import { ez } from 'express-zod-api'
 import type { InferSelectModel, InferInsertModel } from 'drizzle-orm'
@@ -25,6 +25,9 @@ export const usersTable = pgTable('users', {
 
 export type User = InferSelectModel<typeof usersTable>
 export type NewUser = InferInsertModel<typeof usersTable>
+
+export const usersSelectSchema = createSelectSchema(usersTable)
+export const usersInsertSchema = createInsertSchema(usersTable)
 
 // Express-zod-api compatible schemas
 export const selectUserSchema = z.object({

@@ -1,0 +1,1645 @@
+openapi: 3.1.0
+info:
+  title: Express TypeScript OpenAPI
+  version: 1.0.0
+paths:
+  /v1/users/get:
+    get:
+      operationId: GetV1UsersGet
+      parameters:
+        - name: key
+          in: query
+          required: true
+          description: GET /v1/users/get Parameter
+          schema:
+            type: string
+            minLength: 1
+        - name: limit
+          in: query
+          required: false
+          description: GET /v1/users/get Parameter
+          schema:
+            default: 10
+            type: number
+            minimum: 1
+            maximum: 100
+        - name: offset
+          in: query
+          required: false
+          description: GET /v1/users/get Parameter
+          schema:
+            default: 0
+            type: number
+            minimum: 0
+      security:
+        - APIKEY_1: []
+          APIKEY_2: []
+      responses:
+        "200":
+          description: GET /v1/users/get Positive response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: success
+                  data:
+                    type: object
+                    properties:
+                      users:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                            createdAt:
+                              description: YYYY-MM-DDTHH:mm:ss.sssZ
+                              type: string
+                              format: date-time
+                              externalDocs:
+                                url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                            updatedAt:
+                              description: YYYY-MM-DDTHH:mm:ss.sssZ
+                              type: string
+                              format: date-time
+                              externalDocs:
+                                url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                            name:
+                              type: string
+                            age:
+                              type: number
+                            email:
+                              type: string
+                              format: email
+                              pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+                          required:
+                            - id
+                            - createdAt
+                            - updatedAt
+                            - name
+                            - age
+                            - email
+                          additionalProperties: false
+                      count:
+                        type: number
+                    required:
+                      - users
+                      - count
+                    additionalProperties: false
+                required:
+                  - status
+                  - data
+                additionalProperties: false
+        "400":
+          description: GET /v1/users/get Negative response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: error
+                  error:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                    required:
+                      - message
+                    additionalProperties: false
+                required:
+                  - status
+                  - error
+                additionalProperties: false
+              examples:
+                example1:
+                  value:
+                    status: error
+                    error:
+                      message: Sample error message
+    head:
+      operationId: HeadV1UsersGet
+      parameters:
+        - name: key
+          in: query
+          required: true
+          description: HEAD /v1/users/get Parameter
+          schema:
+            type: string
+            minLength: 1
+        - name: limit
+          in: query
+          required: false
+          description: HEAD /v1/users/get Parameter
+          schema:
+            default: 10
+            type: number
+            minimum: 1
+            maximum: 100
+        - name: offset
+          in: query
+          required: false
+          description: HEAD /v1/users/get Parameter
+          schema:
+            default: 0
+            type: number
+            minimum: 0
+      security:
+        - APIKEY_1: []
+          APIKEY_2: []
+      responses:
+        "200":
+          description: HEAD /v1/users/get Positive response
+        "400":
+          description: HEAD /v1/users/get Negative response
+  /v1/users/post:
+    post:
+      operationId: PostV1UsersPost
+      requestBody:
+        description: POST /v1/users/post Request body
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+                  minLength: 1
+                user:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    age:
+                      type: integer
+                      minimum: 0
+                      maximum: 9007199254740991
+                    email:
+                      type: string
+                      maxLength: 255
+                      format: email
+                      pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+                    createdAt:
+                      description: YYYY-MM-DDTHH:mm:ss.sssZ
+                      type: string
+                      format: date-time
+                      pattern: ^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?)?Z?$
+                      externalDocs:
+                        url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                    updatedAt:
+                      description: YYYY-MM-DDTHH:mm:ss.sssZ
+                      type: string
+                      format: date-time
+                      pattern: ^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?)?Z?$
+                      externalDocs:
+                        url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                  required:
+                    - name
+                    - age
+                    - email
+              required:
+                - key
+                - user
+        required: true
+      security:
+        - APIKEY_3: []
+          APIKEY_2: []
+      responses:
+        "200":
+          description: POST /v1/users/post Positive response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: success
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          createdAt:
+                            description: YYYY-MM-DDTHH:mm:ss.sssZ
+                            type: string
+                            format: date-time
+                            externalDocs:
+                              url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                          updatedAt:
+                            description: YYYY-MM-DDTHH:mm:ss.sssZ
+                            type: string
+                            format: date-time
+                            externalDocs:
+                              url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                          name:
+                            type: string
+                          age:
+                            type: number
+                          email:
+                            type: string
+                            format: email
+                            pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+                        required:
+                          - id
+                          - createdAt
+                          - updatedAt
+                          - name
+                          - age
+                          - email
+                        additionalProperties: false
+                      message:
+                        type: string
+                    required:
+                      - user
+                      - message
+                    additionalProperties: false
+                required:
+                  - status
+                  - data
+                additionalProperties: false
+        "400":
+          description: POST /v1/users/post Negative response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: error
+                  error:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                    required:
+                      - message
+                    additionalProperties: false
+                required:
+                  - status
+                  - error
+                additionalProperties: false
+              examples:
+                example1:
+                  value:
+                    status: error
+                    error:
+                      message: Sample error message
+  /v1/user/{id}/get:
+    get:
+      operationId: GetV1UserIdGet
+      parameters:
+        - name: key
+          in: query
+          required: true
+          description: GET /v1/user/:id/get Parameter
+          schema:
+            type: string
+            minLength: 1
+        - name: id
+          in: path
+          required: true
+          description: GET /v1/user/:id/get Parameter
+          schema:
+            type: integer
+            exclusiveMinimum: 0
+            maximum: 9007199254740991
+      security:
+        - APIKEY_1: []
+          APIKEY_2: []
+      responses:
+        "200":
+          description: GET /v1/user/:id/get Positive response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: success
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          createdAt:
+                            description: YYYY-MM-DDTHH:mm:ss.sssZ
+                            type: string
+                            format: date-time
+                            externalDocs:
+                              url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                          updatedAt:
+                            description: YYYY-MM-DDTHH:mm:ss.sssZ
+                            type: string
+                            format: date-time
+                            externalDocs:
+                              url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                          name:
+                            type: string
+                          age:
+                            type: number
+                          email:
+                            type: string
+                            format: email
+                            pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+                        required:
+                          - id
+                          - createdAt
+                          - updatedAt
+                          - name
+                          - age
+                          - email
+                        additionalProperties: false
+                    required:
+                      - user
+                    additionalProperties: false
+                required:
+                  - status
+                  - data
+                additionalProperties: false
+        "400":
+          description: GET /v1/user/:id/get Negative response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: error
+                  error:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                    required:
+                      - message
+                    additionalProperties: false
+                required:
+                  - status
+                  - error
+                additionalProperties: false
+              examples:
+                example1:
+                  value:
+                    status: error
+                    error:
+                      message: Sample error message
+    head:
+      operationId: HeadV1UserIdGet
+      parameters:
+        - name: key
+          in: query
+          required: true
+          description: HEAD /v1/user/:id/get Parameter
+          schema:
+            type: string
+            minLength: 1
+        - name: id
+          in: path
+          required: true
+          description: HEAD /v1/user/:id/get Parameter
+          schema:
+            type: integer
+            exclusiveMinimum: 0
+            maximum: 9007199254740991
+      security:
+        - APIKEY_1: []
+          APIKEY_2: []
+      responses:
+        "200":
+          description: HEAD /v1/user/:id/get Positive response
+        "400":
+          description: HEAD /v1/user/:id/get Negative response
+  /v1/user/{id}/patch:
+    patch:
+      operationId: PatchV1UserIdPatch
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: PATCH /v1/user/:id/patch Parameter
+          schema:
+            type: integer
+            exclusiveMinimum: 0
+            maximum: 9007199254740991
+      requestBody:
+        description: PATCH /v1/user/:id/patch Request body
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+                  minLength: 1
+                data:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    age:
+                      type: integer
+                      minimum: 0
+                      maximum: 9007199254740991
+                    email:
+                      type: string
+                      maxLength: 255
+                      format: email
+                      pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+                    createdAt:
+                      description: YYYY-MM-DDTHH:mm:ss.sssZ
+                      type: string
+                      format: date-time
+                      pattern: ^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?)?Z?$
+                      externalDocs:
+                        url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                    updatedAt:
+                      description: YYYY-MM-DDTHH:mm:ss.sssZ
+                      type: string
+                      format: date-time
+                      pattern: ^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?)?Z?$
+                      externalDocs:
+                        url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+              required:
+                - key
+                - data
+        required: true
+      security:
+        - APIKEY_3: []
+          APIKEY_2: []
+      responses:
+        "200":
+          description: PATCH /v1/user/:id/patch Positive response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: success
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          createdAt:
+                            description: YYYY-MM-DDTHH:mm:ss.sssZ
+                            type: string
+                            format: date-time
+                            externalDocs:
+                              url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                          updatedAt:
+                            description: YYYY-MM-DDTHH:mm:ss.sssZ
+                            type: string
+                            format: date-time
+                            externalDocs:
+                              url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                          name:
+                            type: string
+                          age:
+                            type: number
+                          email:
+                            type: string
+                            format: email
+                            pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+                        required:
+                          - id
+                          - createdAt
+                          - updatedAt
+                          - name
+                          - age
+                          - email
+                        additionalProperties: false
+                      message:
+                        type: string
+                    required:
+                      - user
+                      - message
+                    additionalProperties: false
+                required:
+                  - status
+                  - data
+                additionalProperties: false
+        "400":
+          description: PATCH /v1/user/:id/patch Negative response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: error
+                  error:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                    required:
+                      - message
+                    additionalProperties: false
+                required:
+                  - status
+                  - error
+                additionalProperties: false
+              examples:
+                example1:
+                  value:
+                    status: error
+                    error:
+                      message: Sample error message
+  /v1/user/{id}/delete:
+    delete:
+      operationId: DeleteV1UserIdDelete
+      parameters:
+        - name: key
+          in: query
+          required: true
+          description: DELETE /v1/user/:id/delete Parameter
+          schema:
+            type: string
+            minLength: 1
+        - name: id
+          in: path
+          required: true
+          description: DELETE /v1/user/:id/delete Parameter
+          schema:
+            type: integer
+            exclusiveMinimum: 0
+            maximum: 9007199254740991
+      security:
+        - APIKEY_1: []
+          APIKEY_2: []
+      responses:
+        "200":
+          description: DELETE /v1/user/:id/delete Positive response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: success
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                    required:
+                      - message
+                    additionalProperties: false
+                required:
+                  - status
+                  - data
+                additionalProperties: false
+        "400":
+          description: DELETE /v1/user/:id/delete Negative response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: error
+                  error:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                    required:
+                      - message
+                    additionalProperties: false
+                required:
+                  - status
+                  - error
+                additionalProperties: false
+              examples:
+                example1:
+                  value:
+                    status: error
+                    error:
+                      message: Sample error message
+  /v2/users/get:
+    get:
+      operationId: GetV2UsersGet
+      parameters:
+        - name: key
+          in: query
+          required: true
+          description: GET /v2/users/get Parameter
+          schema:
+            type: string
+            minLength: 1
+        - name: limit
+          in: query
+          required: false
+          description: GET /v2/users/get Parameter
+          schema:
+            default: 10
+            type: number
+            minimum: 1
+            maximum: 100
+        - name: offset
+          in: query
+          required: false
+          description: GET /v2/users/get Parameter
+          schema:
+            default: 0
+            type: number
+            minimum: 0
+      security:
+        - APIKEY_1: []
+          APIKEY_2: []
+      responses:
+        "200":
+          description: GET /v2/users/get Positive response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: success
+                  data:
+                    type: object
+                    properties:
+                      users:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                            createdAt:
+                              description: YYYY-MM-DDTHH:mm:ss.sssZ
+                              type: string
+                              format: date-time
+                              externalDocs:
+                                url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                            updatedAt:
+                              description: YYYY-MM-DDTHH:mm:ss.sssZ
+                              type: string
+                              format: date-time
+                              externalDocs:
+                                url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                            name:
+                              type: string
+                            age:
+                              type: number
+                            email:
+                              type: string
+                              format: email
+                              pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+                          required:
+                            - id
+                            - createdAt
+                            - updatedAt
+                            - name
+                            - age
+                            - email
+                          additionalProperties: false
+                      count:
+                        type: number
+                    required:
+                      - users
+                      - count
+                    additionalProperties: false
+                required:
+                  - status
+                  - data
+                additionalProperties: false
+        "400":
+          description: GET /v2/users/get Negative response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: error
+                  error:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                    required:
+                      - message
+                    additionalProperties: false
+                required:
+                  - status
+                  - error
+                additionalProperties: false
+              examples:
+                example1:
+                  value:
+                    status: error
+                    error:
+                      message: Sample error message
+    head:
+      operationId: HeadV2UsersGet
+      parameters:
+        - name: key
+          in: query
+          required: true
+          description: HEAD /v2/users/get Parameter
+          schema:
+            type: string
+            minLength: 1
+        - name: limit
+          in: query
+          required: false
+          description: HEAD /v2/users/get Parameter
+          schema:
+            default: 10
+            type: number
+            minimum: 1
+            maximum: 100
+        - name: offset
+          in: query
+          required: false
+          description: HEAD /v2/users/get Parameter
+          schema:
+            default: 0
+            type: number
+            minimum: 0
+      security:
+        - APIKEY_1: []
+          APIKEY_2: []
+      responses:
+        "200":
+          description: HEAD /v2/users/get Positive response
+        "400":
+          description: HEAD /v2/users/get Negative response
+  /v2/users/post:
+    post:
+      operationId: PostV2UsersPost
+      requestBody:
+        description: POST /v2/users/post Request body
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+                  minLength: 1
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                age:
+                  type: integer
+                  minimum: 0
+                  maximum: 9007199254740991
+                email:
+                  type: string
+                  maxLength: 255
+                  format: email
+                  pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+                createdAt:
+                  description: YYYY-MM-DDTHH:mm:ss.sssZ
+                  type: string
+                  format: date-time
+                  pattern: ^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?)?Z?$
+                  externalDocs:
+                    url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                updatedAt:
+                  description: YYYY-MM-DDTHH:mm:ss.sssZ
+                  type: string
+                  format: date-time
+                  pattern: ^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?)?Z?$
+                  externalDocs:
+                    url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+              required:
+                - key
+                - name
+                - age
+                - email
+        required: true
+      security:
+        - APIKEY_3: []
+          APIKEY_2: []
+      responses:
+        "200":
+          description: POST /v2/users/post Positive response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: success
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          createdAt:
+                            description: YYYY-MM-DDTHH:mm:ss.sssZ
+                            type: string
+                            format: date-time
+                            externalDocs:
+                              url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                          updatedAt:
+                            description: YYYY-MM-DDTHH:mm:ss.sssZ
+                            type: string
+                            format: date-time
+                            externalDocs:
+                              url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                          name:
+                            type: string
+                          age:
+                            type: number
+                          email:
+                            type: string
+                            format: email
+                            pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+                        required:
+                          - id
+                          - createdAt
+                          - updatedAt
+                          - name
+                          - age
+                          - email
+                        additionalProperties: false
+                      message:
+                        type: string
+                    required:
+                      - user
+                      - message
+                    additionalProperties: false
+                required:
+                  - status
+                  - data
+                additionalProperties: false
+        "400":
+          description: POST /v2/users/post Negative response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: error
+                  error:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                    required:
+                      - message
+                    additionalProperties: false
+                required:
+                  - status
+                  - error
+                additionalProperties: false
+              examples:
+                example1:
+                  value:
+                    status: error
+                    error:
+                      message: Sample error message
+  /v2/user/{id}/get:
+    get:
+      operationId: GetV2UserIdGet
+      parameters:
+        - name: key
+          in: query
+          required: true
+          description: GET /v2/user/:id/get Parameter
+          schema:
+            type: string
+            minLength: 1
+        - name: id
+          in: path
+          required: true
+          description: GET /v2/user/:id/get Parameter
+          schema:
+            type: integer
+            exclusiveMinimum: 0
+            maximum: 9007199254740991
+      security:
+        - APIKEY_1: []
+          APIKEY_2: []
+      responses:
+        "200":
+          description: GET /v2/user/:id/get Positive response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: success
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          createdAt:
+                            description: YYYY-MM-DDTHH:mm:ss.sssZ
+                            type: string
+                            format: date-time
+                            externalDocs:
+                              url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                          updatedAt:
+                            description: YYYY-MM-DDTHH:mm:ss.sssZ
+                            type: string
+                            format: date-time
+                            externalDocs:
+                              url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                          name:
+                            type: string
+                          age:
+                            type: number
+                          email:
+                            type: string
+                            format: email
+                            pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+                        required:
+                          - id
+                          - createdAt
+                          - updatedAt
+                          - name
+                          - age
+                          - email
+                        additionalProperties: false
+                    required:
+                      - user
+                    additionalProperties: false
+                required:
+                  - status
+                  - data
+                additionalProperties: false
+        "400":
+          description: GET /v2/user/:id/get Negative response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: error
+                  error:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                    required:
+                      - message
+                    additionalProperties: false
+                required:
+                  - status
+                  - error
+                additionalProperties: false
+              examples:
+                example1:
+                  value:
+                    status: error
+                    error:
+                      message: Sample error message
+    head:
+      operationId: HeadV2UserIdGet
+      parameters:
+        - name: key
+          in: query
+          required: true
+          description: HEAD /v2/user/:id/get Parameter
+          schema:
+            type: string
+            minLength: 1
+        - name: id
+          in: path
+          required: true
+          description: HEAD /v2/user/:id/get Parameter
+          schema:
+            type: integer
+            exclusiveMinimum: 0
+            maximum: 9007199254740991
+      security:
+        - APIKEY_1: []
+          APIKEY_2: []
+      responses:
+        "200":
+          description: HEAD /v2/user/:id/get Positive response
+        "400":
+          description: HEAD /v2/user/:id/get Negative response
+  /v2/todos/get:
+    get:
+      operationId: GetV2TodosGet
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          description: GET /v2/todos/get Parameter
+          schema:
+            default: 10
+            type: number
+            minimum: 1
+            maximum: 100
+        - name: offset
+          in: query
+          required: false
+          description: GET /v2/todos/get Parameter
+          schema:
+            default: 0
+            type: number
+            minimum: 0
+      responses:
+        "200":
+          description: GET /v2/todos/get Positive response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: success
+                  data:
+                    type: object
+                    properties:
+                      todos:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                            createdAt:
+                              description: YYYY-MM-DDTHH:mm:ss.sssZ
+                              type: string
+                              format: date-time
+                              externalDocs:
+                                url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                            updatedAt:
+                              description: YYYY-MM-DDTHH:mm:ss.sssZ
+                              type: string
+                              format: date-time
+                              externalDocs:
+                                url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                            title:
+                              type: string
+                            description:
+                              type:
+                                - string
+                                - "null"
+                            completed:
+                              type: boolean
+                          required:
+                            - id
+                            - createdAt
+                            - updatedAt
+                            - title
+                            - description
+                            - completed
+                          additionalProperties: false
+                      count:
+                        type: number
+                    required:
+                      - todos
+                      - count
+                    additionalProperties: false
+                required:
+                  - status
+                  - data
+                additionalProperties: false
+        "400":
+          description: GET /v2/todos/get Negative response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: error
+                  error:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                    required:
+                      - message
+                    additionalProperties: false
+                required:
+                  - status
+                  - error
+                additionalProperties: false
+              examples:
+                example1:
+                  value:
+                    status: error
+                    error:
+                      message: Sample error message
+    head:
+      operationId: HeadV2TodosGet
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          description: HEAD /v2/todos/get Parameter
+          schema:
+            default: 10
+            type: number
+            minimum: 1
+            maximum: 100
+        - name: offset
+          in: query
+          required: false
+          description: HEAD /v2/todos/get Parameter
+          schema:
+            default: 0
+            type: number
+            minimum: 0
+      responses:
+        "200":
+          description: HEAD /v2/todos/get Positive response
+        "400":
+          description: HEAD /v2/todos/get Negative response
+  /v2/todos/post:
+    post:
+      operationId: PostV2TodosPost
+      requestBody:
+        description: POST /v2/todos/post Request body
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                description:
+                  type: string
+                completed:
+                  default: false
+                  type: boolean
+                createdAt:
+                  description: YYYY-MM-DDTHH:mm:ss.sssZ
+                  type: string
+                  format: date-time
+                  pattern: ^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?)?Z?$
+                  externalDocs:
+                    url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                updatedAt:
+                  description: YYYY-MM-DDTHH:mm:ss.sssZ
+                  type: string
+                  format: date-time
+                  pattern: ^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?)?Z?$
+                  externalDocs:
+                    url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+              required:
+                - title
+        required: true
+      responses:
+        "200":
+          description: POST /v2/todos/post Positive response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: success
+                  data:
+                    type: object
+                    properties:
+                      todo:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          createdAt:
+                            description: YYYY-MM-DDTHH:mm:ss.sssZ
+                            type: string
+                            format: date-time
+                            externalDocs:
+                              url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                          updatedAt:
+                            description: YYYY-MM-DDTHH:mm:ss.sssZ
+                            type: string
+                            format: date-time
+                            externalDocs:
+                              url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                          title:
+                            type: string
+                          description:
+                            type:
+                              - string
+                              - "null"
+                          completed:
+                            type: boolean
+                        required:
+                          - id
+                          - createdAt
+                          - updatedAt
+                          - title
+                          - description
+                          - completed
+                        additionalProperties: false
+                      message:
+                        type: string
+                    required:
+                      - todo
+                      - message
+                    additionalProperties: false
+                required:
+                  - status
+                  - data
+                additionalProperties: false
+        "400":
+          description: POST /v2/todos/post Negative response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: error
+                  error:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                    required:
+                      - message
+                    additionalProperties: false
+                required:
+                  - status
+                  - error
+                additionalProperties: false
+              examples:
+                example1:
+                  value:
+                    status: error
+                    error:
+                      message: Sample error message
+  /v2/todo/{id}/get:
+    get:
+      operationId: GetV2TodoIdGet
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: GET /v2/todo/:id/get Parameter
+          schema:
+            type: integer
+            exclusiveMinimum: 0
+            maximum: 9007199254740991
+      responses:
+        "200":
+          description: GET /v2/todo/:id/get Positive response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: success
+                  data:
+                    type: object
+                    properties:
+                      todo:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          createdAt:
+                            description: YYYY-MM-DDTHH:mm:ss.sssZ
+                            type: string
+                            format: date-time
+                            externalDocs:
+                              url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                          updatedAt:
+                            description: YYYY-MM-DDTHH:mm:ss.sssZ
+                            type: string
+                            format: date-time
+                            externalDocs:
+                              url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                          title:
+                            type: string
+                          description:
+                            type:
+                              - string
+                              - "null"
+                          completed:
+                            type: boolean
+                        required:
+                          - id
+                          - createdAt
+                          - updatedAt
+                          - title
+                          - description
+                          - completed
+                        additionalProperties: false
+                    required:
+                      - todo
+                    additionalProperties: false
+                required:
+                  - status
+                  - data
+                additionalProperties: false
+        "400":
+          description: GET /v2/todo/:id/get Negative response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: error
+                  error:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                    required:
+                      - message
+                    additionalProperties: false
+                required:
+                  - status
+                  - error
+                additionalProperties: false
+              examples:
+                example1:
+                  value:
+                    status: error
+                    error:
+                      message: Sample error message
+    head:
+      operationId: HeadV2TodoIdGet
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: HEAD /v2/todo/:id/get Parameter
+          schema:
+            type: integer
+            exclusiveMinimum: 0
+            maximum: 9007199254740991
+      responses:
+        "200":
+          description: HEAD /v2/todo/:id/get Positive response
+        "400":
+          description: HEAD /v2/todo/:id/get Negative response
+  /v2/todo/{id}/put:
+    put:
+      operationId: PutV2TodoIdPut
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: PUT /v2/todo/:id/put Parameter
+          schema:
+            type: integer
+            exclusiveMinimum: 0
+            maximum: 9007199254740991
+      requestBody:
+        description: PUT /v2/todo/:id/put Request body
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                description:
+                  type: string
+                completed:
+                  default: false
+                  type: boolean
+                createdAt:
+                  description: YYYY-MM-DDTHH:mm:ss.sssZ
+                  type: string
+                  format: date-time
+                  pattern: ^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?)?Z?$
+                  externalDocs:
+                    url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                updatedAt:
+                  description: YYYY-MM-DDTHH:mm:ss.sssZ
+                  type: string
+                  format: date-time
+                  pattern: ^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?)?Z?$
+                  externalDocs:
+                    url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+              required:
+                - title
+        required: true
+      responses:
+        "200":
+          description: PUT /v2/todo/:id/put Positive response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: success
+                  data:
+                    type: object
+                    properties:
+                      todo:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          createdAt:
+                            description: YYYY-MM-DDTHH:mm:ss.sssZ
+                            type: string
+                            format: date-time
+                            externalDocs:
+                              url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                          updatedAt:
+                            description: YYYY-MM-DDTHH:mm:ss.sssZ
+                            type: string
+                            format: date-time
+                            externalDocs:
+                              url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                          title:
+                            type: string
+                          description:
+                            type:
+                              - string
+                              - "null"
+                          completed:
+                            type: boolean
+                        required:
+                          - id
+                          - createdAt
+                          - updatedAt
+                          - title
+                          - description
+                          - completed
+                        additionalProperties: false
+                      message:
+                        type: string
+                    required:
+                      - todo
+                      - message
+                    additionalProperties: false
+                required:
+                  - status
+                  - data
+                additionalProperties: false
+        "400":
+          description: PUT /v2/todo/:id/put Negative response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: error
+                  error:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                    required:
+                      - message
+                    additionalProperties: false
+                required:
+                  - status
+                  - error
+                additionalProperties: false
+              examples:
+                example1:
+                  value:
+                    status: error
+                    error:
+                      message: Sample error message
+  /v2/todo/{id}/delete:
+    delete:
+      operationId: DeleteV2TodoIdDelete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: DELETE /v2/todo/:id/delete Parameter
+          schema:
+            type: integer
+            exclusiveMinimum: 0
+            maximum: 9007199254740991
+      responses:
+        "200":
+          description: DELETE /v2/todo/:id/delete Positive response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: success
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                    required:
+                      - message
+                    additionalProperties: false
+                required:
+                  - status
+                  - data
+                additionalProperties: false
+        "400":
+          description: DELETE /v2/todo/:id/delete Negative response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    const: error
+                  error:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                    required:
+                      - message
+                    additionalProperties: false
+                required:
+                  - status
+                  - error
+                additionalProperties: false
+              examples:
+                example1:
+                  value:
+                    status: error
+                    error:
+                      message: Sample error message
+components:
+  schemas: {}
+  responses: {}
+  parameters: {}
+  examples: {}
+  requestBodies: {}
+  headers: {}
+  securitySchemes:
+    APIKEY_1:
+      type: apiKey
+      in: query
+      name: key
+    APIKEY_2:
+      type: apiKey
+      in: header
+      name: token
+    APIKEY_3:
+      type: apiKey
+      in: query
+      name: key
+      x-in-actual: body
+      description: key MUST be supplied within the request body instead of query
+  links: {}
+  callbacks: {}
+tags: []
+servers:
+  - url: http://localhost:3000

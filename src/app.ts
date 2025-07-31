@@ -34,10 +34,8 @@ const config = createConfig({
 
 // Attach express-zod-api routes
 attachRouting(config, {
-  api: {
-    v1: v1Routes,
-    v2: v2Routes,
-  },
+  v1: v1Routes,
+  v2: v2Routes,
 })
 
 // Error handling middleware

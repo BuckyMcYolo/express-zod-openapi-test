@@ -7,11 +7,16 @@
     "start": "node dist/app.js",
     "dev": "nodemon src/app.ts",
     "build": "tsc",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "generate:openapi": "tsx src/scripts/generate-openapi.ts",
+    "generate:openapi:yaml": "tsx src/scripts/generate-openapi.ts --yaml",
+    "generate:typed-client": "pnpm openapi-zod-client ./openapi.yaml -o ./src/client/index.ts"
   },
   "packageManager": "pnpm@10.10.0",
   "dependencies": {
     "@neondatabase/serverless": "^1.0.1",
+    "@zodios/core": "^10.9.6",
+    "axios": "^1.11.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "drizzle-orm": "^0.44.0",
@@ -30,8 +35,9 @@
     "@types/helmet": "^4.0.0",
     "@types/http-errors": "^2.0.5",
     "@types/node": "^24.1.0",
-    "drizzle-kit": "^0.24.0",
+    "drizzle-kit": "^0.31.0",
     "nodemon": "^3.1.10",
+    "openapi-zod-client": "^1.18.3",
     "ts-node": "^10.9.2",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3"
